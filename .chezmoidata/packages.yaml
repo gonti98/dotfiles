@@ -1,0 +1,65 @@
+---
+categories:
+  common:
+    - git
+    - curl
+    - wget
+    - fastfetch
+    - btop
+    - flatpak
+    - cmatrix
+    - fzf
+    - jq
+    - zoxide
+    - eza
+    - age
+    - bat
+    - less
+
+  nvim:
+    - fd
+    - gcc
+    - make
+    - nvim
+    - ripgrep
+    - tree-sitter-cli
+    - unzip
+
+  hyprland:
+    - hyprland
+    - xdg-desktop-portal-hyprland
+    - hyprpolkitagent
+    - uwsm
+    - mako
+    - rofi
+    - hyprpaper
+    - quickshell
+    - wl-clipboard
+    - hyprlock
+    - hypridle
+    - brightnessctl
+
+  sddm:
+    - sddm
+    - qt6-svg
+    - qt6-virtualkeyboard
+    - qt6-multimedia-ffmpeg
+
+  yazi:
+    - yazi
+    - ffmpeg
+    - 7zip
+    - jq
+    - poppler
+    - fd
+    - ripgrep
+    - fzf
+    - zoxide
+    - resvg
+    - imagemagick
+
+  fonts:
+    - ttf-firacode-nerd
+
+  opt:
+    - alacritty

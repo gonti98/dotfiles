@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{ if eq .chezmoi.osRelease.id "arch" }}
+
+{{- $systemPackages := list }}
+{{- range $category := .categories }}
+{{- $systemPackages = concat $systemPackages $category }}
+{{- end }}
+
+packages=(
+  {{- range ($systemPackages | uniq) }}
+  "{{ . }}"
+  {{- end }}
+)
+
+flatpak_packages=(
+  {{- range (.flatpak_packages | default (list) | uniq) }}
+  "{{ . }}"
+  {{- end }}
+)
+
+install_packages() {
+  if ((${#packages[@]} == 0)); then
+    return 0
+  fi
+
+  printf '\n--- Installing packages ---\n'
+  sudo pacman --sync --needed --noconfirm -- "${packages[@]}"
+}
+
+install_flatpaks() {
+  if ((${#flatpak_packages[@]} == 0)); then
+    return 0
+  fi
+
+  printf '\n--- Installing Flatpaks ---\n'
+  sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  sudo flatpak install --assumeyes flathub "${flatpak_packages[@]}"
+}
+
+install_packages
+install_flatpaks
+
+{{ else }}
+{{ template "unsupported-distro" . }}
+{{ end }}
