@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-{{ if eq .chezmoi.osRelease.id "arch" }}
+{{- if eq .chezmoi.osRelease.id "arch" }}
 
 {{- $systemPackages := list }}
 {{- range $category := .categories }}
@@ -40,8 +40,10 @@ install_flatpaks() {
 }
 
 install_packages
+{{- if .flatpak.use }}
 install_flatpaks
+{{- end }}
 
-{{ else }}
+{{- else }}
 {{ template "unsupported-distro" . }}
-{{ end }}
+{{- end }}

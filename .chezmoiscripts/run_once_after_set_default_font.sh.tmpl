@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-{{ if eq .chezmoi.osRelease.id "arch" }}
+{{- if eq .chezmoi.osRelease.id "arch" }}
 
 fonts_conf="$HOME/.config/fontconfig/fonts.conf"
 
@@ -30,6 +30,6 @@ fc-cache --force >/dev/null
 
 printf '%s\n' 'Fira Code Nerd Font set as default monospace'
 
-{{ else }}
+{{- else }}
 {{ template "unsupported-distro" . }}
-{{ end }}
+{{- end }}

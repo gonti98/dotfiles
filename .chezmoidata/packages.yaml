@@ -1,13 +1,13 @@
 ---
 categories:
   common:
+    - chezmoi
+    - alacritty
     - git
     - curl
     - wget
-    - fastfetch
     - btop
     - flatpak
-    - cmatrix
     - fzf
     - jq
     - zoxide
@@ -15,6 +15,8 @@ categories:
     - age
     - bat
     - less
+    - bash-completion
+    - starship
 
   nvim:
     - fd
@@ -24,6 +26,7 @@ categories:
     - ripgrep
     - tree-sitter-cli
     - unzip
+    - npm
 
   hyprland:
     - hyprland
@@ -62,4 +65,5 @@ categories:
     - ttf-firacode-nerd
 
   opt:
-    - alacritty
+    - cmatrix
+    - fastfetch

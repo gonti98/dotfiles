@@ -1,0 +1,16 @@
+{{- if .bitwarden.use }}
+{{- $keyPath := joinPath .chezmoi.homeDir ".config" "chezmoi" "age.key" -}}
+{{- if not (lstat $keyPath) -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+KEY="$HOME/.config/chezmoi/age.key"
+
+mkdir -p "$(dirname "$KEY")"
+umask 077
+
+printf '%s\n' \
+  '{{ (bitwarden "item" "chezmoi-age").login.password }}' \
+  >"$KEY"
+{{- end -}}
+{{- end }}

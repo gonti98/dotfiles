@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-{{ if eq .chezmoi.osRelease.id "arch" }}
+{{- if eq .chezmoi.osRelease.id "arch" }}
 
 theme_dir="/usr/share/sddm/themes/sddm-astronaut-theme"
 theme_url="https://github.com/keyitdev/sddm-astronaut-theme.git"
-theme_config="Themes/astronaut.conf"
 
 enable_sddm() {
   printf '\n%s\n' '--- Enabling SDDM display manager ---'
@@ -43,6 +42,6 @@ install_theme() {
 enable_sddm
 install_theme
 
-{{ else }}
+{{- else }}
 {{ template "unsupported-distro" . }}
-{{ end }}
+{{- end }}
