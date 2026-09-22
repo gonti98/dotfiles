@@ -3,8 +3,8 @@ set -euo pipefail
 
 {{- if eq .chezmoi.osRelease.id "arch" }}
 
-theme_dir="/usr/share/sddm/themes/sddm-astronaut-theme"
-theme_url="https://github.com/keyitdev/sddm-astronaut-theme.git"
+THEME_DIR="/usr/share/sddm/themes/sddm-astronaut-theme"
+THEME_URL="https://github.com/keyitdev/sddm-astronaut-theme.git"
 
 enable_sddm() {
   printf '\n%s\n' '--- Enabling SDDM display manager ---'
@@ -18,15 +18,15 @@ enable_sddm() {
 }
 
 install_theme() {
-  if [ -d "$theme_dir" ]; then
-    printf 'Theme already installed at %s, skipping\n' "$theme_dir"
+  if [ -d "$THEME_DIR" ]; then
+    printf 'Theme already installed at %s, skipping\n' "$THEME_DIR"
     return 0
   fi
 
-  sudo git clone -q -b master --depth 1 "$theme_url" "$theme_dir"
+  sudo git clone -q -b master --depth 1 "$THEME_URL" "$THEME_DIR"
 
   printf '%s\n' '--- Installing theme fonts ---'
-  sudo cp -r "$theme_dir/Fonts/." /usr/share/fonts/
+  sudo cp -r "$THEME_DIR/Fonts/." /usr/share/fonts/
   sudo fc-cache -f >/dev/null
 
   printf '%s\n' '--- Configuring SDDM ---'

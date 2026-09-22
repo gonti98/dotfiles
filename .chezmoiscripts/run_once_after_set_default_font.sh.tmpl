@@ -3,24 +3,25 @@ set -euo pipefail
 
 {{- if eq .chezmoi.osRelease.id "arch" }}
 
-fonts_conf="$HOME/.config/fontconfig/fonts.conf"
+FONTS_CONF="$HOME/.config/fontconfig/fonts.conf"
+FONT_NAME="FiraCode Nerd Font Mono"
 
 printf '\n%s\n' '--- Setting up fonts ---'
-if grep --quiet 'FiraCode Nerd Font Mono' "$fonts_conf" 2>/dev/null; then
+if grep --quiet "$FONT_NAME" "$FONTS_CONF" 2>/dev/null; then
   printf '%s\n' 'Fonts are configured, skipping'
   exit 0
 fi
 
-mkdir --parents "$(dirname "$fonts_conf")"
+mkdir --parents "$(dirname "$FONTS_CONF")"
 
-cat >"$fonts_conf" <<'EOF'
+cat >"$FONTS_CONF" <<EOF
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
   <match target="pattern">
     <test qual="any" name="family"><string>monospace</string></test>
     <edit name="family" mode="prepend" binding="strong">
-      <string>FiraCode Nerd Font Mono</string>
+      <string>${FONT_NAME}</string>
     </edit>
   </match>
 </fontconfig>
@@ -28,7 +29,7 @@ EOF
 
 fc-cache --force >/dev/null
 
-printf '%s\n' 'Fira Code Nerd Font set as default monospace'
+printf '%s\n' "$FONT_NAME set as default monospace"
 
 {{- else }}
 {{ template "unsupported-distro" . }}

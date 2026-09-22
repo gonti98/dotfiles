@@ -3,6 +3,7 @@ set -euo pipefail
 
 BIN_DIR="${HOME}/.local/bin"
 BIN="${BIN_DIR}/bw"
+BW_URL="https://bitwarden.com/download/?app=cli&platform=linux"
 
 if command -v bw >/dev/null 2>&1; then
   exit 0
@@ -12,15 +13,15 @@ if [[ -x "$BIN" ]]; then
   exit 0
 fi
 
-mkdir -p "$BIN_DIR"
+mkdir --parents "$BIN_DIR"
 
-tmpdir="$(mktemp -d)"
-trap 'rm -rf "$tmpdir"' EXIT
+tmpdir="$(mktemp --directory)"
+trap 'rm --recursive --force "$tmpdir"' EXIT
 
-curl -fL \
-  'https://bitwarden.com/download/?app=cli&platform=linux' \
-  -o "$tmpdir/bw.zip"
+curl --fail --location \
+  "$BW_URL" \
+  --output "$tmpdir/bw.zip"
 
 unzip -q "$tmpdir/bw.zip" -d "$tmpdir"
 
-install -m 0755 "$tmpdir/bw" "$BIN"
+install --mode=0755 "$tmpdir/bw" "$BIN"

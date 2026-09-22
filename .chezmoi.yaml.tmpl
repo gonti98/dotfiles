@@ -10,15 +10,15 @@ data:
     use: {{ $useFlatpak }}
 
 encryption: age
-
 age:
   identity: ~/.config/chezmoi/age.key
   recipient: age10g3twc4qs0ug8kqhcq9x8y5af4k4tu277vn3rf2l4w7rtj7tzv3q9y7j2c
 
+{{ if $useBw }}
 bitwarden:
   unlock: auto
-
 hooks:
   read-source-state:
     pre:
       command: "{{ .chezmoi.sourceDir }}/.chezmoiscripts/.install_password_manager.sh"
+{{- end }}

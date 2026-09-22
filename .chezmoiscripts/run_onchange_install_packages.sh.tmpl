@@ -26,6 +26,7 @@ install_packages() {
   fi
 
   printf '\n--- Installing packages ---\n'
+  sudo pacman --sync --refresh --sysupgrade --noconfirm
   sudo pacman --sync --needed --noconfirm -- "${packages[@]}"
 }
 
