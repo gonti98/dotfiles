@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{- if eq .chezmoi.osRelease.id "arch" }}
+{{- if .flatpak.use }}
+
+FLATHUB_REPO="https://flathub.org/repo/flathub.flatpakrepo"
+{{ template "packages-array" (list "flatpak_packages" (.flatpak_packages | default (list))) }}
+if ((${#flatpak_packages[@]} == 0)); then
+  exit 0
+fi
+
+if ! command -v flatpak >/dev/null 2>&1; then
+  printf '\n--- Flatpak not found, configuring ---\n'
+  sudo pacman --sync --needed --noconfirm flatpak
+fi
+
+printf '\n--- Installing Flatpaks ---\n'
+sudo flatpak remote-add --if-not-exists flathub "$FLATHUB_REPO"
+sudo flatpak install --assumeyes flathub "${flatpak_packages[@]}"
+{{- end }}
+{{- end }}

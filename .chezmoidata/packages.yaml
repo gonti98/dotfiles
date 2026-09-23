@@ -7,7 +7,6 @@ categories:
     - curl
     - wget
     - btop
-    - flatpak
     - fzf
     - jq
     - zoxide

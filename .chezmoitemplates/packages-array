@@ -1,0 +1,7 @@
+{{- $name := index . 0 -}}
+{{- $list := index . 1 | default (list) -}}
+{{ $name }}=(
+{{- range ($list | uniq) }}
+  "{{ . }}"
+{{- end }}
+)

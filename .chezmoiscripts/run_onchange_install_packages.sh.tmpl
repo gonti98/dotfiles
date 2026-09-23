@@ -8,42 +8,13 @@ set -euo pipefail
 {{- $systemPackages = concat $systemPackages $category }}
 {{- end }}
 
-packages=(
-  {{- range ($systemPackages | uniq) }}
-  "{{ . }}"
-  {{- end }}
-)
+{{ template "packages-array" (list "packages" $systemPackages) }}
+if ((${#packages[@]} == 0)); then
+  return 0
+fi
 
-flatpak_packages=(
-  {{- range (.flatpak_packages | default (list) | uniq) }}
-  "{{ . }}"
-  {{- end }}
-)
-
-install_packages() {
-  if ((${#packages[@]} == 0)); then
-    return 0
-  fi
-
-  printf '\n--- Installing packages ---\n'
-  sudo pacman --sync --refresh --sysupgrade --noconfirm
-  sudo pacman --sync --needed --noconfirm -- "${packages[@]}"
-}
-
-install_flatpaks() {
-  if ((${#flatpak_packages[@]} == 0)); then
-    return 0
-  fi
-
-  printf '\n--- Installing Flatpaks ---\n'
-  sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-  sudo flatpak install --assumeyes flathub "${flatpak_packages[@]}"
-}
-
-install_packages
-{{- if .flatpak.use }}
-install_flatpaks
-{{- end }}
+printf '\n--- Installing packages ---\n'
+sudo pacman --sync --needed --noconfirm -- "${packages[@]}"
 
 {{- else }}
 {{ template "unsupported-distro" . }}

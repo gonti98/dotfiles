@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{- if eq .chezmoi.osRelease.id "arch" }}
+
+sudo pacman --sync --refresh --sysupgrade
+
+{{- else }}
+{{ template "unsupported-distro" . }}
+{{- end }}
