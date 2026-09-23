@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-{{- if eq .chezmoi.osRelease.id "arch" }}
+{{- if .supported }}
 
 FONTS_CONF="$HOME/.config/fontconfig/fonts.conf"
 FONT_NAME="FiraCode Nerd Font Mono"
@@ -31,6 +31,4 @@ fc-cache --force >/dev/null
 
 printf '%s\n' "$FONT_NAME set as default monospace"
 
-{{- else }}
-{{ template "unsupported-distro" . }}
 {{- end }}

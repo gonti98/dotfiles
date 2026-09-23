@@ -1,7 +1,9 @@
+{{- $supported := eq .chezmoi.osRelease.id "arch" -}}
 {{- $useAur := promptBoolOnce . "aur.use" "Use AUR [y/N]" false -}}
 {{- $useBw  := promptBoolOnce . "bitwarden.use" "Use Bitwarden as secret manager [y/N]" false -}}
 {{- $useFlatpak := promptBoolOnce . "flatpak.use" "Use Flatpak [y/N]" false -}}
 data:
+  supported: {{ $supported }}
   aur:
     use: {{ $useAur }}
   bitwarden:

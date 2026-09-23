@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-{{- if eq .chezmoi.osRelease.id "arch" }}
+{{- if .supported }}
 
 THEME_DIR="/usr/share/sddm/themes/sddm-astronaut-theme"
 THEME_URL="https://github.com/keyitdev/sddm-astronaut-theme.git"
@@ -42,6 +42,4 @@ install_theme() {
 enable_sddm
 install_theme
 
-{{- else }}
-{{ template "unsupported-distro" . }}
 {{- end }}

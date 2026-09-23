@@ -1,2 +1,0 @@
-printf 'Linux distribution {{ .chezmoi.osRelease.id }} is not supported\n' >&2
-exit 1
