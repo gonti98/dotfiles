@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{- if and .supported .aur.use }}
+
+{{- $aurPackages := list }}
+{{- range $category := .aur_categories }}
+{{- $aurPackages = concat $aurPackages $category }}
+{{- end }}
+
+{{ template "packages-array" (list "aur_packages" $aurPackages) }}
+if ((${#aur_packages[@]} == 0)); then
+  exit 0
+fi
+
+if ! command -v paru >/dev/null 2>&1; then
+  printf '\n--- Installing paru (AUR helper) ---\n'
+
+  sudo pacman --sync --needed --noconfirm base-devel git
+
+  tmpdir="$(mktemp --directory)"
+  trap 'rm --recursive --force "$tmpdir"' EXIT
+
+  git clone --depth=1 https://aur.archlinux.org/paru.git "$tmpdir/paru"
+  cd "$tmpdir/paru"
+
+  makepkg --syncdeps --install --needed --noconfirm
+fi
+
+printf '\n--- Installing AUR packages ---\n'
+paru --sync --needed --noconfirm -- "${aur_packages[@]}"
+
+{{- end }}

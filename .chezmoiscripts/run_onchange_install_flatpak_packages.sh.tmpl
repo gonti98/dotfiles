@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-{{- if and .flatpak.use .supported }}
+{{- if and .supported .flatpak.use }}
 
 FLATHUB_REPO="https://flathub.org/repo/flathub.flatpakrepo"
-{{ template "packages-array" (list "flatpak_packages" (.flatpak_packages | default (list))) }}
+{{ template "packages-array" (list "flatpak_packages" .flatpak_packages) }}
 if ((${#flatpak_packages[@]} == 0)); then
   exit 0
 fi
@@ -16,6 +16,6 @@ fi
 
 printf '\n--- Installing Flatpaks ---\n'
 sudo flatpak remote-add --if-not-exists flathub "$FLATHUB_REPO"
-sudo flatpak install --assumeyes flathub "${flatpak_packages[@]}"
+sudo flatpak install --assumeyes flathub -- "${flatpak_packages[@]}"
 
 {{- end }}

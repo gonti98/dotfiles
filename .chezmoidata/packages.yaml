@@ -1,7 +1,6 @@
 ---
 categories:
   common:
-    - chezmoi
     - alacritty
     - git
     - curl
@@ -21,7 +20,7 @@ categories:
     - fd
     - gcc
     - make
-    - nvim
+    - neovim
     - ripgrep
     - tree-sitter-cli
     - unzip
@@ -62,6 +61,7 @@ categories:
 
   fonts:
     - ttf-firacode-nerd
+    - noto-fonts-emoji
 
   opt:
     - cmatrix
