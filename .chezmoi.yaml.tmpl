@@ -1,26 +1,27 @@
 {{- $supported := eq .chezmoi.osRelease.id "arch" -}}
-{{- $useAur := promptBoolOnce . "aur.use" "Use AUR [y/N]" false -}}
-{{- $useBw  := promptBoolOnce . "bitwarden.use" "Use Bitwarden as secret manager [y/N]" false -}}
-{{- $useFlatpak := promptBoolOnce . "flatpak.use" "Use Flatpak [y/N]" false -}}
 data:
   supported: {{ $supported }}
+
+{{- if $supported -}}
+{{- $useAge := promptBoolOnce . "age.use" "Use Age to decrypt secrets? [y/N]" false -}}
+{{- $useAur := promptBoolOnce . "aur.use" "Use AUR [y/N]" false -}}
+{{- $useFlatpak := promptBoolOnce . "flatpak.use" "Use Flatpak [y/N]" false }}
+  age:
+    use: {{ $useAge }}
   aur:
     use: {{ $useAur }}
-  bitwarden:
-    use: {{ $useBw }}
   flatpak:
     use: {{ $useFlatpak }}
 
+{{ if $useAge -}}
 encryption: age
 age:
-  identity: ~/.config/chezmoi/age.key
-  recipient: age10g3twc4qs0ug8kqhcq9x8y5af4k4tu277vn3rf2l4w7rtj7tzv3q9y7j2c
+  identity: {{ .chezmoi.homeDir }}/.config/chezmoi/identity.key
+  recipient: age13mnfr2ne38d9rdzw44qk0ekxcuncz8nxrquq6awhx97hzvjw452qa3y22e
+{{- end }}
 
-{{ if $useBw }}
-bitwarden:
-  unlock: auto
 hooks:
   read-source-state:
     pre:
-      command: "{{ .chezmoi.sourceDir }}/.chezmoiscripts/.install_password_manager.sh"
+      command: {{ .chezmoi.sourceDir }}/.ensure-pre-requisites.sh
 {{- end }}

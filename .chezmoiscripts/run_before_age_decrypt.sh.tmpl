@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{ if and .supported .age.use -}}
+{{- $keyPath := joinPath .chezmoi.homeDir ".config" "chezmoi" "identity.key" -}}
+{{- $encryptedKeyPath := joinPath .chezmoi.sourceDir ".identity.key.age" -}}
+{{- if not (lstat $keyPath) -}}
+
+KEY='{{ $keyPath }}'
+ENCRYPTED_KEY='{{ $encryptedKeyPath }}'
+
+printf '\n--- Setting up age identity ---\n'
+
+if [[ ! -f $ENCRYPTED_KEY ]]; then
+  printf '\n--- Encrypted age key not found at %s ---\n' "$ENCRYPTED_KEY" >&2
+  exit 1
+fi
+
+install --directory --mode 700 "$(dirname "$KEY")"
+
+umask 077
+age --decrypt --output "$KEY" "$ENCRYPTED_KEY"
+chmod 600 "$KEY"
+
+{{- end -}}
+{{- end }}
