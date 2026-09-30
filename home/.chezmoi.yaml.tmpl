@@ -1,0 +1,21 @@
+{{- $IDENTITY := joinPath .chezmoi.homeDir ".config" "chezmoi" "identity.key" -}}
+{{- $PUBLIC_IDENTITY := joinPath .chezmoi.homeDir ".config" "chezmoi" "identity.key.pub" -}}
+{{- $ENCRYPTEDIDENTITY := joinPath .chezmoi.sourceDir ".identity.key.age" -}}
+
+{{- $useAur := promptBoolOnce . "aur.use" "Use AUR [y/N]" false -}}
+{{- $useFlatpak := promptBoolOnce . "flatpak.use" "Use Flatpak [y/N]" false -}}
+
+encryption: age
+age:
+  identity: {{ $IDENTITY }}
+  recipientsfile: {{ $PUBLIC_IDENTITY }}
+
+data:
+  age:
+    identity: {{ $IDENTITY }}
+    publicIdentity: {{ $PUBLIC_IDENTITY }}
+    encryptedIdentity: {{ $ENCRYPTEDIDENTITY }}
+  aur:
+    use: {{ $useAur }}
+  flatpak:
+    use: {{ $useFlatpak }}

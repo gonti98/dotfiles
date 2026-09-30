@@ -30,7 +30,6 @@ categories:
     - hyprland
     - xdg-desktop-portal-hyprland
     - hyprpolkitagent
-    - uwsm
     - mako
     - rofi
     - hyprpaper
@@ -39,12 +38,7 @@ categories:
     - hyprlock
     - hypridle
     - brightnessctl
-
-  sddm:
-    - sddm
-    - qt6-svg
-    - qt6-virtualkeyboard
-    - qt6-multimedia-ffmpeg
+    - ly
 
   yazi:
     - yazi

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+IDENTITY='{{ .age.identity }}'
+PUBLIC_IDENTITY='{{ .age.publicIdentity }}'
+ENCRYPTED_IDENTITY='{{ .age.encryptedIdentity }}'
+
+printf '\n--- Setting up age identity ---\n'
+
+if [[ ! -f "$ENCRYPTED_IDENTITY" ]]; then
+  printf '\n--- Encrypted age key not found at %s ---\n' "$ENCRYPTED_IDENTITY" >&2
+  exit 1
+fi
+
+umask 077
+age --decrypt --output "$IDENTITY" "$ENCRYPTED_IDENTITY"
+age-keygen -y "$IDENTITY" > "$PUBLIC_IDENTITY"
+chmod 600 -- "$IDENTITY" "$PUBLIC_IDENTITY"

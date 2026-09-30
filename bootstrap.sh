@@ -4,8 +4,8 @@ set -euo pipefail
 missing_packages=()
 wanted_packages=(
   "age"
-  "curl"
-  "git"
+  "bitwarden-cli"
+  "chezmoi"
 )
 
 if [[ ! -f /etc/arch-release ]]; then
@@ -20,7 +20,9 @@ for package in "${wanted_packages[@]}"; do
 done
 
 if [[ ${#missing_packages[@]} -eq 0 ]]; then
-  exit 0
+  return 0
+else
+  sudo pacman --sync --refresh --sysupgrade --needed --noconfirm -- "${missing_packages[@]}"
 fi
 
-sudo pacman --sync --refresh --sysupgrade --needed --noconfirm -- "${missing_packages[@]}"
+chezmoi init --apply gonti98
