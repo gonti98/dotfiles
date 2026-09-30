@@ -1,28 +1,38 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-missing_packages=()
-wanted_packages=(
-  "age"
-  "bitwarden-cli"
-  "chezmoi"
+readonly REQUIRED_PACKAGES=(
+  age
+  bitwarden-cli
+  chezmoi
 )
 
 if [[ ! -f /etc/arch-release ]]; then
-  echo "Unsupported distribution" >&2
+  printf '\n--- Unsupported distribution: Arch Linux is required ---\n' >&2
   exit 1
 fi
 
-for package in "${wanted_packages[@]}"; do
-  if ! command -v "${package}" >/dev/null; then
-    missing_packages+=("${package}")
+if ((EUID == 0)); then
+  printf '\n--- Do not run this script as root ---\n' >&2
+  exit 1
+fi
+
+missing_packages=()
+
+for package in "${REQUIRED_PACKAGES[@]}"; do
+  if ! pacman --query "$package" &>/dev/null; then
+    missing_packages+=("$package")
   fi
 done
 
-if [[ ${#missing_packages[@]} -eq 0 ]]; then
-  return 0
-else
-  sudo pacman --sync --refresh --sysupgrade --needed --noconfirm -- "${missing_packages[@]}"
+if ((${#missing_packages[@]})); then
+  sudo pacman \
+    --sync \
+    --refresh \
+    --sysupgrade \
+    --needed \
+    --noconfirm \
+    "${missing_packages[@]}"
 fi
 
-chezmoi init --apply gonti98
+exec chezmoi init --apply gonti98
