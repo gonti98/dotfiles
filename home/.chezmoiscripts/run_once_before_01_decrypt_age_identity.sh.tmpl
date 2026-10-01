@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+{{- if .age.use }}
+
 IDENTITY='{{ .age.identity }}'
 PUBLIC_IDENTITY='{{ .age.publicIdentity }}'
 ENCRYPTED_IDENTITY='{{ .age.encryptedIdentity }}'
@@ -16,3 +18,5 @@ umask 077
 age --decrypt --output "$IDENTITY" "$ENCRYPTED_IDENTITY"
 age-keygen -y "$IDENTITY" > "$PUBLIC_IDENTITY"
 chmod 600 -- "$IDENTITY" "$PUBLIC_IDENTITY"
+
+{{- end }}

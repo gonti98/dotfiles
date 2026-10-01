@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+sudo -v
+
 {{- if .flatpak.use }}
 
 FLATHUB_REPO="https://flathub.org/repo/flathub.flatpakrepo"

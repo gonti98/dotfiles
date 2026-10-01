@@ -15,6 +15,7 @@ categories:
     - less
     - bash-completion
     - starship
+    - man
 
   nvim:
     - fd

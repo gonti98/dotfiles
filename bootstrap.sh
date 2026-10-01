@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+sudo -v
+
 readonly REQUIRED_PACKAGES=(
   age
   bitwarden-cli
