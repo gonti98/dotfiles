@@ -6,7 +6,7 @@
 {{- $useFlatpak := promptBoolOnce . "flatpak.use" "Use Flatpak [y/N]" false -}}
 {{- $useAge := promptBoolOnce . "age.use" "Use Age [y/N]" false -}}
 
-{{- if .age.use }}
+{{- if $useAge }}
 encryption: age
 age:
   identity: {{ $IDENTITY }}
