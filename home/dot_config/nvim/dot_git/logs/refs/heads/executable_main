@@ -1,0 +1,3 @@
+0000000000000000000000000000000000000000 d114712e08beb984bab6b46c0f3a626abec8bbe8 Jacek <jacpawlyszyn@task.gda.pl> 1776076794 +0200	commit (initial): initial commit
+d114712e08beb984bab6b46c0f3a626abec8bbe8 924c731bbc950816fe4ae48ee9e13de8e4058be5 Jacek <jacpawlyszyn@task.gda.pl> 1776077591 +0200	commit: feat: add neo-tree addon
+924c731bbc950816fe4ae48ee9e13de8e4058be5 947dfc090c494dba81d1b58aa565aceeedcb38e8 Jacek <jacpawlyszyn@task.gda.pl> 1784289757 +0200	commit: refactor: enable nerd fonts and configure editor options

@@ -1,0 +1,97 @@
+===============================================================================
+MYDOC                                                               *myDoc.txt*
+
+Moja dokumentacja nvim. Jak pisać `vimdoc`, komendy i inne.
+
+SPIS TREŚCI: ~
+1. VIMDOC                                                              |vimdoc|
+  TAGI & LINKI                                                     |tags&links|
+  NAGŁÓWKI I STRUKTURA                                      |nagłówki&stuktura|
+  BLOKI KODU                                                        |blokiKodu|
+  OZDOBNIKI                                                         |ozdobniki|
+2. KOMENDY                                                            |komendy|
+
+===============================================================================
+1. VIMDOC                                                              *vimdoc*
+
+Info na temat pisania vimdoc
+
+-------------------------------------------------------------------------------
+TAGI & LINKI                                                       *tags&links*
+
+Użyj `Ctrl-]` do skakania
+
+Słowa między `*` to tag: `*tag*`
+Słowa między `|` to link: `|link|`
+
+-------------------------------------------------------------------------------
+NAGŁÓWKI I STRUKTURA                                        *nagłówki&stuktura*
+
+Tytuł to tekst z wielkiej litery zakończony `~`: `NAGŁÓWEK ~`
+Linia oddzielająca główne rozdziały: `==================`
+Linia oddzielająca główne podrozdziały: `------------------`
+
+-------------------------------------------------------------------------------
+BLOKI KODU                                                          *blokiKodu*
+
+Aby wyświetlić kod użyj `>` na początku i `<` na końcu
+Na początku można dodać interpreter np `>bash`
+
+WARNING:
+blok kodu musi być wcięty przynajmniej o jeden tabulator lub spację)
+
+-------------------------------------------------------------------------------
+OZDOBNIKI                                                           *ozdobniki*
+
+Wyróżnienie to tekst zakończony `~` np. `wyróżnienie ~`
+
+Tekst między `<` i `>` to <KLUCZ>
+Tekst między `{` i `}` to {argument}
+Tekst między `[` i `]` to [opcionalne]
+Tekst między `'` i `'` to 'opcja'
+Tekst zaczynający się od `:` to :komenda
+Dodatkowo `NOTE:`, `WARNING:` oraz `DEPRECATED:`
+
+===============================================================================
+2. KOMENDY                                                            *komendy*
+
+Spis komend które warto pamiętać
+
+Zastąp wszystkie wystąpienia w całym pliku. ~
+>vim
+  %s/stary_tekst/nowy_tekst/g
+  %s/stary_tekst/nowy_tekst/gc
+<
+Wyjaśnienie znaków:
+  % = cały plik (wszystkie linie)
+  s = substitute (zamiana)
+  g = globalnie w linii (wszystkie wystąpienia w danej linii)
+  c = confirm (potwierdzenie ręczne)
+
+ZNACZNIKI                                                               *marks*
+>
+  ma – postaw znacznik 'a' w bieżącej pozycji. Gdzie 'a' to zmienna znaku
+  `a – skocz do znacznika 'a' (w tej samej linii).
+  'a – skocz do początku linii, w której jest znacznik 'a'.
+<
+MAKRO                                                                  *macros*
+>
+  q a           – zacznij nagrywać makro w rejestrze `a`.
+  nagrywane     – wpisuj operacje
+  q             – zakończ nagrywanie makra.
+
+(np. `c w` → zmień słowo, `Esc`, `j` → następna linia).
+
+
+TIP
+edytowanie pliku nie do modyfikacji
+:set modifiable / :set ma 
+
+makro na usuwanie spacji na końcu linii
+
+`:%s/\s\+$//e` -- wiele spacji
+`:%s/\s\$//c` -- usuń spacje na końcu, potwierdź wszystkie występowania
+
+Zaznacz tekst `gq` potnie linie na długość `:set textwidth?` 
+===============================================================================
+vim:tw=80:ts=2:ft=help:norl:

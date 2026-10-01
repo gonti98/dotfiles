@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+
+[[ $- != *i* ]] && return
+
+if [ -d ~/.config/bash/ ]; then
+  for rc in ~/.config/bash/*; do
+    if [ -f "$rc" ]; then
+      . "$rc"
+    fi
+  done
+fi
+unset rc
