@@ -92,8 +92,8 @@ Scope {
         right: true
       }
 
-      implicitHeight: 32
-      color: root.theme.bgBase
+      implicitHeight: 26
+      color: "transparent"
 
       Item {
         anchors.fill: parent

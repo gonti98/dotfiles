@@ -5,7 +5,7 @@ Reproducible Linux system bootstrap with chezmoi.
 ## Faststart
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/gonti98/dotfiles/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/gonti98/dotfiles/main/init.sh | bash
 ```
 
 ## Encryption

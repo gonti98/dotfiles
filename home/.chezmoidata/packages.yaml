@@ -1,5 +1,5 @@
 ---
-categories:
+packages:
   common:
     - alacritty
     - git
@@ -16,6 +16,16 @@ categories:
     - bash-completion
     - starship
     - man
+    - rsync
+    - aria2
+    - mpv
+    - opencode
+    - openssh
+    - imv
+
+  opt:
+    - cmatrix
+    - fastfetch
 
   nvim:
     - fd
@@ -41,6 +51,11 @@ categories:
     - brightnessctl
     - ly
 
+  network:
+    - networkmanager
+    - networkmanager-openvpn
+    - openvpn
+
   yazi:
     - yazi
     - ffmpeg
@@ -58,6 +73,24 @@ categories:
     - ttf-firacode-nerd
     - noto-fonts-emoji
 
-  opt:
-    - cmatrix
-    - fastfetch
+  games:
+    - mesa
+    - vulkan-radeon
+    - vulkan-tools
+    - steam
+    - gamescope
+
+  work:
+    - kubectl
+    - krew
+    - helm
+    - ansible
+    - podman
+    - k9s
+
+aur_categories:
+  - xdg-ninja
+  - localsend-bin
+
+flatpak_packages:
+  - com.brave.Browser

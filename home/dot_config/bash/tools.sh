@@ -6,11 +6,8 @@
 export EDITOR="/usr/bin/nvim"
 export SUDO_EDITOR=/usr/bin/nvim
 
-# tree
-tree() {
-  local level="${1:-2}"
-  eza --tree --level="$level" --icons --git-ignore --all
-}
+# My scripts
+source "$HOME/myFiles/myScripts/note-completion.bash"
 
 # kubectl autocompletion
 complete -o default -F __start_kubectl k

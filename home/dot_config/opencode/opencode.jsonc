@@ -1,0 +1,52 @@
+{
+  "$schema": "https://opencode.ai/v2/config.json",
+
+  "username": "gonti",
+  "autoupdate": "notify",
+  "share": "disabled",
+  "shell": "/bin/bash",
+  "snapshots": false,
+  "lsp": false,
+  "formatter": false,
+
+  "instructions": [
+    "~/.config/opencode/AGENTS.md"
+  ],
+  "permission": {
+    "edit": "ask"
+  },
+  "providers": {
+    "caise": {
+      "package": "aisdk:@ai-sdk/openai-compatible",
+      "name": "CAISE LLM",
+      "settings": {
+        "baseURL": "https://chat.llm.caise.apl.task.gda.pl/api",
+        "apiKey": "{env:CAISE_LLM}"
+      },
+      "models": {
+        "openai.cyankiwi/GLM-4.7-AWQ-4bit": {
+          "name": "GLM-4.7",
+        },
+        "openai.Qwen/Qwen3.8-27B-FP8": {
+          "name": "Qwen3.8",
+        },
+
+        "openai.Qwen/Qwen3.5-35B-A3B-FP8": {
+          "name": "Qwen3.5",
+          "options": {
+            "clear_thinking": false,
+            "include_reasoning": false,
+          }
+        },
+      }
+    }
+  },
+  "compaction": {
+    "auto": true,
+    "tail_turns": 20
+  },
+  "tool_output": {
+    "max_lines": 1000,
+    "max_bytes": 65536
+  }
+}

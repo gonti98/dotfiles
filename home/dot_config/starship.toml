@@ -22,7 +22,7 @@ style = "bold blue"
 style = "bold cyan"
 read_only = " 󰌾"
 read_only_style = "red"
-truncation_length = 3
+truncation_length = 0
 truncation_symbol = "…/"
 
 [username]

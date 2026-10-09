@@ -30,3 +30,9 @@ alias k='kubectl'
 
 # OpenCode
 alias op='opencode'
+
+# tree
+tree() {
+  local level="${1:-2}"
+  eza --tree --level="$level" --icons --git-ignore --all --group-directories-first
+}

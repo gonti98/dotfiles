@@ -20,7 +20,11 @@ Singleton {
   // CPU Usage
   Process {
     id: cpuProc
-    command: ["sh", "-c", "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{print 100 - $1\"%\"}'"]
+    command: [
+      "sh",
+      "-c",
+      "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{printf \"%.0f%%\", 100 - $1}'"
+    ]
     running: true
 
     stdout: StdioCollector {
@@ -95,9 +99,12 @@ Singleton {
   // Temperature
   Process {
     id: tempProc
-    command: ["sh", "-c", "sensors 2>/dev/null | grep -E 'Package id 0|Tctl' | head -1 | awk '{print $2}' | sed 's/+//' || echo 'N/A'"]
     running: true
-
+    command: [
+      "sh",
+      "-c",
+      "sensors 2>/dev/null | grep -E 'Package id 0|Tctl' | head -1 | awk '{printf \"%.0f°C\", $2}' | sed 's/+//' || echo 'N/A'"
+    ]
     stdout: StdioCollector {
       onStreamFinished: {
         root.temperature = text.trim() || "N/A"
