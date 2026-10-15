@@ -41,19 +41,18 @@ packages:
     - hyprland
     - xdg-desktop-portal-hyprland
     - hyprpolkitagent
-    - mako
-    - rofi
-    - hyprpaper
-    - quickshell
     - wl-clipboard
-    - hyprlock
-    - hypridle
     - brightnessctl
     - ly
+    - upower
+    - noctalia
+    - ddcutil
+    # - rofi
 
   network:
     - networkmanager
     - networkmanager-openvpn
+    - nm-connection-editor
     - openvpn
 
   yazi:
@@ -77,7 +76,7 @@ packages:
     - mesa
     - vulkan-radeon
     - vulkan-tools
-    - steam
+    # - steam
     - gamescope
 
   work:

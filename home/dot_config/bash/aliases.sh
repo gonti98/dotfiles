@@ -19,9 +19,6 @@ alias gco='git checkout'
 alias gd='git diff'
 alias gb='git branch'
 
-# Btop
-alias btop='sudo btop'
-
 # Chezmoi
 alias ch='chezmoi'
 

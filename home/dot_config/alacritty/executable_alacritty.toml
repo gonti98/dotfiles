@@ -23,5 +23,5 @@ size = 16.0
 
 [general]
 import = [
-    "~/.config/alacritty/themes/catppuccin_mocha.toml"
+    "~/.config/alacritty/themes/noctalia.toml",
 ]

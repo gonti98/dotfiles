@@ -1,7 +1,5 @@
 hl.on("hyprland.start", function()
-	hl.exec_cmd("quickshell")
-	hl.exec_cmd("hypridle")
-	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("noctalia")
 	hl.exec_cmd("systemctl --user start hyprpolkitagent.service")
 	hl.exec_cmd("systemctl --user start xdg-desktop-portal-hyprland.service")
 end)

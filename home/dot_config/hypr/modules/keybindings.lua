@@ -1,81 +1,197 @@
-MAIN_MOD = "SUPER"
-TERMINAL = "alacritty"
-FILE_MANAGER = "thunar"
-MENU = "rofi -show drun"
+-- Variables
+local terminal = "alacritty"
+local ipc = "noctalia msg "
 
--- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(MAIN_MOD .. " + RETURN", hl.dsp.exec_cmd(TERMINAL), { description = "Open Teminal" })
-hl.bind(MAIN_MOD .. " + Q", hl.dsp.window.close(), { description = "Close active window" })
+-- 1. Core binds
+hl.bind(MAIN_MOD .. " + RETURN", hl.dsp.exec_cmd(terminal), {
+	description = "Open terminal",
+})
+
+hl.bind(MAIN_MOD .. " + SHIFT + RETURN", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"), {
+	description = "Open launcher",
+})
+
+hl.bind(MAIN_MOD .. " + SPACE", hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"), {
+	description = "Toggle control center",
+})
+
+hl.bind(MAIN_MOD .. " + comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"), {
+	description = "Toggle settings",
+})
+
+hl.bind(MAIN_MOD .. " + I", hl.dsp.exec_cmd(ipc .. "panel-toggle kenn/keybind-cheatsheet:cheatsheet"), {
+	description = "Toggle keybind cheatsheet",
+})
+
+hl.bind(MAIN_MOD .. " + SHIFT + S", hl.dsp.exec_cmd(ipc .. "screenshot-region"), {
+	description = "Screenshot region",
+})
+
+hl.bind(MAIN_MOD .. " + BACKSPACE", hl.dsp.exec_cmd("loginctl lock-session"), {
+	description = "Lock session",
+})
+
+-- 2. Window management
+hl.bind(MAIN_MOD .. " + Q", hl.dsp.window.close(), {
+	description = "Close active window",
+})
 
 hl.bind(
-	MAIN_MOD .. " + M",
-	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
+	MAIN_MOD .. " + F",
+	hl.dsp.window.fullscreen({
+		mode = "fullscreen",
+		action = "toggle",
+	}),
+	{
+		description = "Toggle fullscreen",
+	}
 )
 
-hl.bind(MAIN_MOD .. " + E", hl.dsp.exec_cmd(FILE_MANAGER))
-hl.bind(MAIN_MOD .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(MAIN_MOD .. " + R", hl.dsp.exec_cmd(MENU))
-hl.bind(MAIN_MOD .. " + SHIFT + L", hl.dsp.exec_cmd("loginctl lock-session"))
-hl.bind(MAIN_MOD .. " + P", hl.dsp.window.pseudo())
-hl.bind(MAIN_MOD .. " + T", hl.dsp.layout("togglesplit"))
+hl.bind(MAIN_MOD .. " + SHIFT + F", function()
+	local window = hl.get_active_window()
+	if not window then
+		return
+	end
 
--- Move focus with MAIN_MOD + arrow keys
-hl.bind(MAIN_MOD .. " + left", hl.dsp.focus({ direction = "left" }))
-hl.bind(MAIN_MOD .. " + right", hl.dsp.focus({ direction = "right" }))
-hl.bind(MAIN_MOD .. " + up", hl.dsp.focus({ direction = "up" }))
-hl.bind(MAIN_MOD .. " + down", hl.dsp.focus({ direction = "down" }))
+	if window.floating then
+		hl.dispatch(hl.dsp.window.float({ action = "unset" }))
+	else
+		hl.dispatch(hl.dsp.window.float({ action = "set" }))
+		hl.dispatch(hl.dsp.window.center())
+	end
+end, {
+	description = "Toggle floating mode",
+})
 
--- Vim-style focus movement
-hl.bind(MAIN_MOD .. " + h", hl.dsp.focus({ direction = "left" }))
-hl.bind(MAIN_MOD .. " + l", hl.dsp.focus({ direction = "right" }))
-hl.bind(MAIN_MOD .. " + k", hl.dsp.focus({ direction = "up" }))
-hl.bind(MAIN_MOD .. " + j", hl.dsp.focus({ direction = "down" }))
+hl.bind(MAIN_MOD .. " + P", hl.dsp.window.pseudo({ action = "toggle" }), {
+	description = "Toggle pseudotile",
+})
 
--- Switch workspaces with MAIN_MOD + [0-9]
+hl.bind(MAIN_MOD .. " + T", hl.dsp.layout("togglesplit"), {
+	description = "Toggle split layout",
+})
+
+-- 3. Window navigation
+hl.bind("ALT + Tab", hl.dsp.exec_cmd(ipc .. "window-switcher hold"), {
+	description = "Switch windows",
+})
+
+hl.bind(MAIN_MOD .. " + H", hl.dsp.focus({ direction = "left" }), {
+	description = "Focus window to the left",
+})
+
+hl.bind(MAIN_MOD .. " + L", hl.dsp.focus({ direction = "right" }), {
+	description = "Focus window to the right",
+})
+
+hl.bind(MAIN_MOD .. " + K", hl.dsp.focus({ direction = "up" }), {
+	description = "Focus window above",
+})
+
+hl.bind(MAIN_MOD .. " + J", hl.dsp.focus({ direction = "down" }), {
+	description = "Focus window below",
+})
+
+-- 4. Workspace navigation and window movement
 for i = 1, 10 do
 	local key = i % 10
-	hl.bind(MAIN_MOD .. " + " .. key, hl.dsp.focus({ workspace = i }))
-	hl.bind(MAIN_MOD .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+
+	hl.bind(MAIN_MOD .. " + " .. key, hl.dsp.focus({ workspace = i }), {
+		description = "Switch to workspace " .. i,
+	})
+
+	hl.bind(MAIN_MOD .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }), {
+		description = "Move window to workspace " .. i,
+	})
 end
 
--- Example special workspace (scratchpad)
-hl.bind(MAIN_MOD .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind(MAIN_MOD .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+-- 5. Special workspace
+hl.bind(MAIN_MOD .. " + D", hl.dsp.workspace.toggle_special("magic"), {
+	description = "Toggle special workspace",
+})
 
--- Scroll through existing workspaces with MAIN_MOD + scroll
-hl.bind(MAIN_MOD .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(MAIN_MOD .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(MAIN_MOD .. " + SHIFT + D", function()
+	local window = hl.get_active_window()
+	if not window then
+		return
+	end
 
--- Move/resize windows with MAIN_MOD + LMB/RMB and dragging
-hl.bind(MAIN_MOD .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(MAIN_MOD .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+	if window.workspace.name == "special:magic" then
+		local workspace = hl.get_active_workspace()
+		if workspace then
+			hl.dispatch(hl.dsp.window.move({
+				workspace = workspace.id,
+			}))
+		end
+	else
+		hl.dispatch(hl.dsp.window.move({
+			workspace = "special:magic",
+		}))
+	end
+end, {
+	description = "Move window to or from special workspace",
+})
 
--- Laptop multimedia keys for volume and LCD brightness
-hl.bind(
-	"XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86AudioLowerVolume",
-	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86AudioMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86AudioMicMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
-	{ locked = true, repeating = true }
-)
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true, repeating = true })
+-- 6. Mouse window controls
+hl.bind(MAIN_MOD .. " + mouse:272", hl.dsp.window.drag(), {
+	mouse = true,
+	description = "Move window with mouse",
+})
 
--- Requires playerctl
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+hl.bind(MAIN_MOD .. " + mouse:273", hl.dsp.window.resize(), {
+	mouse = true,
+	description = "Resize window with mouse",
+})
+
+-- 7. Audio controls: available in all submaps
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. "volume-up"), {
+	submap_universal = true,
+	description = "Increase volume",
+})
+
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(ipc .. "volume-down"), {
+	submap_universal = true,
+	description = "Decrease volume",
+})
+
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd(ipc .. "volume-mute"), {
+	submap_universal = true,
+	description = "Toggle audio mute",
+})
+
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(ipc .. "mic-mute"), {
+	submap_universal = true,
+	description = "Toggle microphone mute",
+})
+
+-- 8. Brightness controls: available in all submaps
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(ipc .. "brightness-up"), {
+	submap_universal = true,
+	description = "Increase screen brightness",
+})
+
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. "brightness-down"), {
+	submap_universal = true,
+	description = "Decrease screen brightness",
+})
+
+-- 9. Media playback: default submap only, requires playerctl
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), {
+	locked = true,
+	description = "Play next track",
+})
+
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), {
+	locked = true,
+	description = "Toggle playback",
+})
+
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), {
+	locked = true,
+	description = "Toggle playback",
+})
+
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), {
+	locked = true,
+	description = "Play previous track",
+})
