@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
 
 # My scripts
 export PATH="$PATH:$HOME/myFiles/myScripts"

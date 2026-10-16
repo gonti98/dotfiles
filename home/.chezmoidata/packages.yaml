@@ -86,6 +86,7 @@ packages:
     - ansible
     - podman
     - k9s
+    - opentofu
 
 aur_categories:
   - xdg-ninja

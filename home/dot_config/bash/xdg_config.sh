@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
 
 # XDG Base Directory Specification
 export XDG_CONFIG_HOME="$HOME/.config"

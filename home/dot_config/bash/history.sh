@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
 
 _HISTDIR="${XDG_STATE_HOME:-$HOME/.local/state}/bash"
 mkdir -p "$_HISTDIR"
