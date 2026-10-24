@@ -23,6 +23,10 @@ packages:
     - openssh
     - imv
 
+  sound:
+    - easyeffects
+    - lsp-plugins-lv2
+
   opt:
     - cmatrix
     - fastfetch
@@ -47,7 +51,6 @@ packages:
     - upower
     - noctalia
     - ddcutil
-    # - rofi
 
   network:
     - networkmanager
@@ -72,12 +75,12 @@ packages:
     - ttf-firacode-nerd
     - noto-fonts-emoji
 
-  games:
-    - mesa
-    - vulkan-radeon
-    - vulkan-tools
-    # - steam
-    - gamescope
+  # games:
+  #   - mesa
+  #   - vulkan-radeon
+  #   - vulkan-tools
+  #   - steam
+  #   - gamescope
 
   work:
     - kubectl
@@ -87,6 +90,7 @@ packages:
     - podman
     - k9s
     - opentofu
+    - vault
 
 aur_categories:
   - xdg-ninja
@@ -94,3 +98,4 @@ aur_categories:
 
 flatpak_packages:
   - com.brave.Browser
+  # - com.heroicgameslauncher.hgl

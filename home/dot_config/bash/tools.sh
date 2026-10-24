@@ -7,7 +7,7 @@ export EDITOR="/usr/bin/nvim"
 export SUDO_EDITOR=/usr/bin/nvim
 
 # My scripts
-source "$HOME/myFiles/myScripts/note-completion.bash"
+source "$HOME/myFiles/scripts/note-completion.bash"
 
 # kubectl autocompletion
 complete -o default -F __start_kubectl k
@@ -34,3 +34,13 @@ eval "$(zoxide init bash)"
 
 # starship init
 eval "$(starship init bash)"
+
+# yazi
+function y() {
+  local tmp cwd
+  tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd <"$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || builtin true
+  command rm -f -- "$tmp"
+}

@@ -61,12 +61,18 @@ Zastąp wszystkie wystąpienia w całym pliku. ~
 >vim
   %s/stary_tekst/nowy_tekst/g
   %s/stary_tekst/nowy_tekst/gc
+
+Makro na usuwanie spacji na końcu linii ~
+
+`:%s/\s\+$//e` -- wiele spacji
+`:%s/\s\$//c` -- usuń spacje na końcu, potwierdź wszystkie występowania
 <
 Wyjaśnienie znaków:
   % = cały plik (wszystkie linie)
   s = substitute (zamiana)
   g = globalnie w linii (wszystkie wystąpienia w danej linii)
   c = confirm (potwierdzenie ręczne)
+  \> = znacznik końca dopasowania
 
 ZNACZNIKI                                                               *marks*
 >
@@ -87,10 +93,6 @@ TIP
 edytowanie pliku nie do modyfikacji
 :set modifiable / :set ma 
 
-makro na usuwanie spacji na końcu linii
-
-`:%s/\s\+$//e` -- wiele spacji
-`:%s/\s\$//c` -- usuń spacje na końcu, potwierdź wszystkie występowania
 
 Zaznacz tekst `gq` potnie linie na długość `:set textwidth?` 
 ===============================================================================
